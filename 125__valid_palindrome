@@ -1,0 +1,93 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+
+char isupperchar(char c){
+    if(
+        (c>0x41) && (c< (0x41 + 26))
+    ){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+char islowerchar(char c){
+    if(
+        (c>0x61) && (c< (0x61 + 26))
+    ){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+char* keepchar(char* s){
+    
+    unsigned char i=0;
+    char* p = malloc(strlen(s));
+    unsigned char cur=0;
+    
+    //printf("src:");
+    for(i=0;i<strlen(s);i++){
+        
+        //printf("0x%x ");
+        if (  
+            isupperchar(*(s+i)) || islowerchar(*(s+i)) 
+            ){
+                //printf("\n[ischar]\n");
+                *(p+cur)=*(s+i);
+                
+                if(*(p+cur)<0x61){
+                    //handle upperchar 
+                    *(p+cur)+=0x20;
+                }
+                
+                cur++;
+            }
+    }
+    
+    return p;
+}
+
+
+unsigned char isPalindrome(char* s) {
+        char* p =keepchar(s);
+        
+        unsigned char half = strlen(p)/2;
+        unsigned char odd = strlen(p)&0x1;
+        
+        unsigned char i,l,r;
+        
+        for(i=0;i<half;i++){
+            l=(odd)?(half-i):(half-i-1); r=half+i;
+            
+            if( *(p+l) != *(p+r) ){
+                printf("l=%d,lv=0x%x...r=%d,rv=0x%x\n ", l,*(p+l),r,*(p+r));
+                return 0;
+            }
+        }
+        
+        return 1;
+}
+
+char test[10];
+
+int main()
+{
+    strcpy(test,"ollp88lo");
+    printf("->%s\n",test);
+    
+    char* ans=keepchar(test);
+    printf("-->%s\n",ans);
+
+    printf("--->%d\n",isPalindrome(test));
+
+    return 0;
+}
