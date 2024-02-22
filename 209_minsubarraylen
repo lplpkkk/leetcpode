@@ -1,0 +1,24 @@
+#define MIN(a,b) (a<b)?a:b
+
+int minSubArrayLen(int target, int* nums, int numsSize) {
+
+    int i=0;
+    unsigned int len=-1;
+    int sum=0;
+    int start=0;
+
+    for(i=0;i<numsSize;i++){
+        //printf("\033[32;1m x\033[0m\n");   
+        sum+=nums[i];
+        printf(" %d, %d\n",sum,nums[i]);   
+        while(sum>=target){
+            // sliding window
+            printf("    %d, %d\n",len, i-start+1);   
+            len=MIN(len,i-start+1);
+            sum-=nums[start];
+            start++;
+        }
+    }
+
+    return (len==-1)?0:(len);
+}
